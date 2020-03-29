@@ -1,0 +1,15 @@
+name: InstanaClient
+targets:
+  InstanaClient:
+    type: framework
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources: [InstanaClient]
+    info:
+      path: ./Info.plist
+      version: 1.173.690
+    settings:
+      APPLICATION_EXTENSION_API_ONLY: true
+    scheme: {}
+    dependencies:
+    - carthage: Alamofire
