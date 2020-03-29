@@ -17,7 +17,7 @@ public struct PrometheusWebhookIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(webhookUrl: String, receiver: String?id: String?, kind: String, name: String) {
+    public init(webhookUrl: String, receiver: String?, id: String?, kind: String, name: String) {
         self.webhookUrl = webhookUrl
         self.receiver = receiver
         self.id = id

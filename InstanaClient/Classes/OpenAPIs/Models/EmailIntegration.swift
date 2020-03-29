@@ -16,7 +16,7 @@ public struct EmailIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(emails: [String]id: String?, kind: String, name: String) {
+    public init(emails: [String], id: String?, kind: String, name: String) {
         self.emails = emails
         self.id = id
         self.kind = kind
