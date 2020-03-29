@@ -34,7 +34,7 @@ Add application configuration
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import InstanaClient
 
-let applicationConfig = ApplicationConfig(id: "id_example", label: "label_example", matchSpecification: 123, scope: "scope_example", boundaryScope: "boundaryScope_example") // ApplicationConfig | 
+let applicationConfig = ApplicationConfig(id: "id_example", label: "label_example", matchSpecification: "matchSpecification_example", scope: "scope_example", boundaryScope: "boundaryScope_example") // ApplicationConfig | 
 
 // Add application configuration
 ApplicationSettingsAPI.addApplicationConfig(applicationConfig: applicationConfig) { (response, error) in
@@ -647,7 +647,7 @@ Update application configuration
 import InstanaClient
 
 let id = "id_example" // String | 
-let applicationConfig = ApplicationConfig(id: "id_example", label: "label_example", matchSpecification: 123, scope: "scope_example", boundaryScope: "boundaryScope_example") // ApplicationConfig | 
+let applicationConfig = ApplicationConfig(id: "id_example", label: "label_example", matchSpecification: "matchSpecification_example", scope: "scope_example", boundaryScope: "boundaryScope_example") // ApplicationConfig | 
 
 // Update application configuration
 ApplicationSettingsAPI.putApplicationConfig(id: id, applicationConfig: applicationConfig) { (response, error) in

@@ -109,7 +109,7 @@ Update synthetic call configurations
 // The following code samples are still beta. For any issue, please report via http://github.com/OpenAPITools/openapi-generator/issues/new
 import InstanaClient
 
-let syntheticCallConfig = SyntheticCallConfig(defaultRulesEnabled: false, customRules: [SyntheticCallRule(name: "name_example", description: "description_example", matchSpecification: 123, enabled: false)]) // SyntheticCallConfig | 
+let syntheticCallConfig = SyntheticCallConfig(defaultRulesEnabled: false, customRules: [SyntheticCallRule(name: "name_example", description: "description_example", matchSpecification: "matchSpecification_example", enabled: false)]) // SyntheticCallConfig | 
 
 // Update synthetic call configurations
 SyntheticCallsAPI.updateSyntheticCall(syntheticCallConfig: syntheticCallConfig) { (response, error) in

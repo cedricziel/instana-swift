@@ -23,11 +23,11 @@ public struct ApplicationConfig: Codable {
     }
     public var id: String?
     public var label: String?
-    public var matchSpecification: Any
+    public var matchSpecification: String
     public var scope: Scope
     public var boundaryScope: BoundaryScope
 
-    public init(id: String?, label: String?, matchSpecification: Any, scope: Scope, boundaryScope: BoundaryScope) {
+    public init(id: String?, label: String?, matchSpecification: String, scope: Scope, boundaryScope: BoundaryScope) {
         self.id = id
         self.label = label
         self.matchSpecification = matchSpecification

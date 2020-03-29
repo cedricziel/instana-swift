@@ -13,10 +13,10 @@ public struct SyntheticCallRule: Codable {
 
     public var name: String?
     public var description: String?
-    public var matchSpecification: Any
+    public var matchSpecification: String
     public var enabled: Bool?
 
-    public init(name: String?, description: String?, matchSpecification: Any, enabled: Bool?) {
+    public init(name: String?, description: String?, matchSpecification: String, enabled: Bool?) {
         self.name = name
         self.description = description
         self.matchSpecification = matchSpecification

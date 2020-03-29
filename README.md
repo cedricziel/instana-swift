@@ -342,7 +342,6 @@ Class | Method | HTTP request | Description
  - [AuditLogResponse](docs/AuditLogResponse.md)
  - [BeaconGroupsResult](docs/BeaconGroupsResult.md)
  - [BeaconResult](docs/BeaconResult.md)
- - [BinaryOperatorDTO](docs/BinaryOperatorDTO.md)
  - [BuiltInEventSpecification](docs/BuiltInEventSpecification.md)
  - [BuiltInEventSpecificationWithLastUpdated](docs/BuiltInEventSpecificationWithLastUpdated.md)
  - [CallGroupsItem](docs/CallGroupsItem.md)

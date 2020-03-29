@@ -6308,7 +6308,8 @@
             "type": "string"
           },
           "matchSpecification": {
-            "$ref": "#/components/schemas/MatchExpressionDTO"
+            "minLength": 0,
+            "type": "string"
           },
           "scope": {
             "type": "string",
@@ -6327,34 +6328,6 @@
             ]
           }
         }
-      },
-      "BinaryOperatorDTO": {
-        "required": [
-          "conjunction",
-          "left",
-          "right"
-        ],
-        "type": "object",
-        "properties": {
-          "left": {
-            "$ref": "#/components/schemas/MatchExpressionDTO"
-          },
-          "right": {
-            "$ref": "#/components/schemas/MatchExpressionDTO"
-          },
-          "conjunction": {
-            "type": "string",
-            "enum": [
-              "AND",
-              "OR"
-            ]
-          }
-        },
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/MatchExpressionDTO"
-          }
-        ]
       },
       "MatchExpressionDTO": {
         "type": "object",
@@ -8862,7 +8835,8 @@
             "type": "string"
           },
           "matchSpecification": {
-            "$ref": "#/components/schemas/MatchExpressionDTO"
+            "minLength": 0,
+            "type": "string"
           },
           "enabled": {
             "type": "boolean"

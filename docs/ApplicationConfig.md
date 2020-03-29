@@ -5,7 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] 
 **label** | **String** |  | [optional] 
-**matchSpecification** | [**Any**](.md) |  | 
+**matchSpecification** | **String** |  | 
 **scope** | **String** |  | 
 **boundaryScope** | **String** |  | 
 
