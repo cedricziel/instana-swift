@@ -17,12 +17,11 @@ public struct SnapshotPreview: Codable {
     public var plugin: String?
     public var data: [String:Any]?
 
-    public init(id: String?, time: Int64?, label: String?, plugin: String?, data: [String:Any]?) {
+    public init(id: String?, time: Int64?, label: String?, plugin: String?) {
         self.id = id
         self.time = time
         self.label = label
         self.plugin = plugin
-        self.data = data
     }
 
 }
