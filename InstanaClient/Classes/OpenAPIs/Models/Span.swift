@@ -11,7 +11,7 @@ import Foundation
 public struct Span: Codable { 
 
 
-    public enum Kind: String, Codable {
+    public enum Kind: String, Codable, CaseIterable {
         case unknown = "UNKNOWN"
         case entry = "ENTRY"
         case exit = "EXIT"

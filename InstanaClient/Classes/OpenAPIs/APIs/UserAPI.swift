@@ -14,13 +14,15 @@ open class UserAPI {
      Delete role
      
      - parameter roleId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteRole(roleId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteRoleWithRequestBuilder(roleId: roleId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteRole(roleId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteRoleWithRequestBuilder(roleId: roleId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -53,11 +55,17 @@ open class UserAPI {
     /**
      All pending invitations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInvitations(completion: @escaping ((_ data: [UserResult]?,_ error: Error?) -> Void)) {
-        getInvitationsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInvitations(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UserResult]?,_ error: Error?) -> Void)) {
+        getInvitationsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -85,11 +93,17 @@ open class UserAPI {
      Role
      
      - parameter roleId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getRole(roleId: String, completion: @escaping ((_ data: Role?,_ error: Error?) -> Void)) {
-        getRoleWithRequestBuilder(roleId: roleId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getRole(roleId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Role?,_ error: Error?) -> Void)) {
+        getRoleWithRequestBuilder(roleId: roleId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -120,11 +134,17 @@ open class UserAPI {
     /**
      All roles
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getRoles(completion: @escaping ((_ data: [Role]?,_ error: Error?) -> Void)) {
-        getRolesWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getRoles(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [Role]?,_ error: Error?) -> Void)) {
+        getRolesWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -151,11 +171,17 @@ open class UserAPI {
     /**
      All users (without invitations)
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getUsers(completion: @escaping ((_ data: [UserResult]?,_ error: Error?) -> Void)) {
-        getUsersWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getUsers(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UserResult]?,_ error: Error?) -> Void)) {
+        getUsersWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -182,11 +208,17 @@ open class UserAPI {
     /**
      All users (incl. invitations)
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getUsersIncludingInvitations(completion: @escaping ((_ data: UsersResult?,_ error: Error?) -> Void)) {
-        getUsersIncludingInvitationsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getUsersIncludingInvitations(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: UsersResult?,_ error: Error?) -> Void)) {
+        getUsersIncludingInvitationsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -215,11 +247,17 @@ open class UserAPI {
      
      - parameter roleId: (path)  
      - parameter role: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putRole(roleId: String, role: Role, completion: @escaping ((_ data: Role?,_ error: Error?) -> Void)) {
-        putRoleWithRequestBuilder(roleId: roleId, role: role).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putRole(roleId: String, role: Role, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Role?,_ error: Error?) -> Void)) {
+        putRoleWithRequestBuilder(roleId: roleId, role: role).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -252,13 +290,15 @@ open class UserAPI {
      Remove user from tenant
      
      - parameter userId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func removeUserFromTenant(userId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        removeUserFromTenantWithRequestBuilder(userId: userId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func removeUserFromTenant(userId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        removeUserFromTenantWithRequestBuilder(userId: userId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -292,13 +332,15 @@ open class UserAPI {
      Revoke pending invitation
      
      - parameter email: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func revokePendingInvitations(email: String? = nil, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        revokePendingInvitationsWithRequestBuilder(email: email).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func revokePendingInvitations(email: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        revokePendingInvitationsWithRequestBuilder(email: email).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -333,13 +375,15 @@ open class UserAPI {
      
      - parameter email: (query)  (optional)
      - parameter roleId: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func sendInvitation(email: String? = nil, roleId: String? = nil, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        sendInvitationWithRequestBuilder(email: email, roleId: roleId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func sendInvitation(email: String? = nil, roleId: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        sendInvitationWithRequestBuilder(email: email, roleId: roleId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -376,13 +420,15 @@ open class UserAPI {
      
      - parameter userId: (path)  
      - parameter roleId: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func setRole(userId: String, roleId: String? = nil, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        setRoleWithRequestBuilder(userId: userId, roleId: roleId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func setRole(userId: String, roleId: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        setRoleWithRequestBuilder(userId: userId, roleId: roleId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }

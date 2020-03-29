@@ -14,13 +14,15 @@ open class MaintenanceConfigurationAPI {
      Delete maintenance configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteMaintenanceConfig(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteMaintenanceConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteMaintenanceConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteMaintenanceConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -54,11 +56,17 @@ open class MaintenanceConfigurationAPI {
      Maintenance configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getMaintenanceConfig(id: String, completion: @escaping ((_ data: MaintenanceConfigWithLastUpdated?,_ error: Error?) -> Void)) {
-        getMaintenanceConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getMaintenanceConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: MaintenanceConfigWithLastUpdated?,_ error: Error?) -> Void)) {
+        getMaintenanceConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -89,11 +97,17 @@ open class MaintenanceConfigurationAPI {
     /**
      All maintenance configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getMaintenanceConfigs(completion: @escaping ((_ data: [ValidatedMaintenanceConfigWithStatus]?,_ error: Error?) -> Void)) {
-        getMaintenanceConfigsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getMaintenanceConfigs(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ValidatedMaintenanceConfigWithStatus]?,_ error: Error?) -> Void)) {
+        getMaintenanceConfigsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -122,13 +136,15 @@ open class MaintenanceConfigurationAPI {
      
      - parameter id: (path)  
      - parameter maintenanceConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putMaintenanceConfig(id: String, maintenanceConfig: MaintenanceConfig, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        putMaintenanceConfigWithRequestBuilder(id: id, maintenanceConfig: maintenanceConfig).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func putMaintenanceConfig(id: String, maintenanceConfig: MaintenanceConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        putMaintenanceConfigWithRequestBuilder(id: id, maintenanceConfig: maintenanceConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }

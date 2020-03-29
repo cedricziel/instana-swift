@@ -11,7 +11,7 @@ import Foundation
 public struct Application: Codable { 
 
 
-    public enum EntityType: String, Codable {
+    public enum EntityType: String, Codable, CaseIterable {
         case application = "APPLICATION"
         case service = "SERVICE"
         case endpoint = "ENDPOINT"

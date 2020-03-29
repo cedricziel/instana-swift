@@ -11,7 +11,7 @@ import Foundation
 public struct MetricConfiguration: Codable { 
 
 
-    public enum Aggregation: String, Codable {
+    public enum Aggregation: String, Codable, CaseIterable {
         case sum = "SUM"
         case mean = "MEAN"
         case max = "MAX"

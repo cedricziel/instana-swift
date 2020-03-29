@@ -13,11 +13,17 @@ open class ApplicationCatalogAPI {
     /**
      Get Metric catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationCatalogMetrics(completion: @escaping ((_ data: [MetricDescription]?,_ error: Error?) -> Void)) {
-        getApplicationCatalogMetricsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationCatalogMetrics(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [MetricDescription]?,_ error: Error?) -> Void)) {
+        getApplicationCatalogMetricsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -45,11 +51,17 @@ open class ApplicationCatalogAPI {
     /**
      Get filter tag catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationCatalogTags(completion: @escaping ((_ data: [Tag]?,_ error: Error?) -> Void)) {
-        getApplicationCatalogTagsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationCatalogTags(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [Tag]?,_ error: Error?) -> Void)) {
+        getApplicationCatalogTagsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

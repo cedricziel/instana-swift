@@ -11,7 +11,7 @@ import Foundation
 public struct ValidatedMaintenanceConfigWithStatus: Codable { 
 
 
-    public enum Status: String, Codable {
+    public enum Status: String, Codable, CaseIterable {
         case unscheduled = "UNSCHEDULED"
         case scheduled = "SCHEDULED"
         case active = "ACTIVE"

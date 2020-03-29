@@ -15,11 +15,17 @@ open class InfrastructureCatalogAPI {
      
      - parameter plugin: (path)  
      - parameter filter: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInfrastructureCatalogMetrics(plugin: String, filter: String? = nil, completion: @escaping ((_ data: [MetricInstance]?,_ error: Error?) -> Void)) {
-        getInfrastructureCatalogMetricsWithRequestBuilder(plugin: plugin, filter: filter).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInfrastructureCatalogMetrics(plugin: String, filter: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [MetricInstance]?,_ error: Error?) -> Void)) {
+        getInfrastructureCatalogMetricsWithRequestBuilder(plugin: plugin, filter: filter).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -55,11 +61,17 @@ open class InfrastructureCatalogAPI {
     /**
      Get plugin catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInfrastructureCatalogPlugins(completion: @escaping ((_ data: [PluginResult]?,_ error: Error?) -> Void)) {
-        getInfrastructureCatalogPluginsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInfrastructureCatalogPlugins(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [PluginResult]?,_ error: Error?) -> Void)) {
+        getInfrastructureCatalogPluginsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -87,11 +99,17 @@ open class InfrastructureCatalogAPI {
     /**
      get search field catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInfrastructureCatalogSearchFields(completion: @escaping ((_ data: [SearchFieldResult]?,_ error: Error?) -> Void)) {
-        getInfrastructureCatalogSearchFieldsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInfrastructureCatalogSearchFields(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [SearchFieldResult]?,_ error: Error?) -> Void)) {
+        getInfrastructureCatalogSearchFieldsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

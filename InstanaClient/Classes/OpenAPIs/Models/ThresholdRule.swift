@@ -11,14 +11,14 @@ import Foundation
 public struct ThresholdRule: Codable { 
 
 
-    public enum Aggregation: String, Codable {
+    public enum Aggregation: String, Codable, CaseIterable {
         case sum = "SUM"
         case avg = "AVG"
         case min = "MIN"
         case max = "MAX"
         case _none = "NONE"
     }
-    public enum ConditionOperator: String, Codable {
+    public enum ConditionOperator: String, Codable, CaseIterable {
         case gt = "GT"
         case gte = "GTE"
         case lt = "LT"

@@ -11,7 +11,7 @@ import Foundation
 public struct GetApplications: Codable { 
 
 
-    public enum EndpointTypes: String, Codable {
+    public enum EndpointTypes: String, Codable, CaseIterable {
         case undefined = "UNDEFINED"
         case rpc = "RPC"
         case event = "EVENT"

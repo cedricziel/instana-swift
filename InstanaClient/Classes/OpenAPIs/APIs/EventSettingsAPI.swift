@@ -14,11 +14,17 @@ open class EventSettingsAPI {
      Create Website Alert Config
      
      - parameter websiteAlertConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func create(websiteAlertConfig: WebsiteAlertConfig, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
-        createWithRequestBuilder(websiteAlertConfig: websiteAlertConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func create(websiteAlertConfig: WebsiteAlertConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
+        createWithRequestBuilder(websiteAlertConfig: websiteAlertConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -47,13 +53,15 @@ open class EventSettingsAPI {
      Delete alerting
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteAlert(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteAlertWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteAlert(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteAlertWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -87,13 +95,15 @@ open class EventSettingsAPI {
      Delete alerting channel
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteAlertingChannel(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteAlertingChannelWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteAlertingChannel(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteAlertingChannelWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -127,13 +137,15 @@ open class EventSettingsAPI {
      Delete built-in event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteBuiltInEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteBuiltInEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -167,13 +179,15 @@ open class EventSettingsAPI {
      Delete custom event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteCustomEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteCustomEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -207,13 +221,15 @@ open class EventSettingsAPI {
      Disable built-in event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func disableBuiltInEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        disableBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func disableBuiltInEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        disableBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -247,11 +263,17 @@ open class EventSettingsAPI {
      Disable custom event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func disableCustomEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
-        disableCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func disableCustomEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
+        disableCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -283,13 +305,15 @@ open class EventSettingsAPI {
      Enable built-in event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func enableBuiltInEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        enableBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func enableBuiltInEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        enableBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -323,11 +347,17 @@ open class EventSettingsAPI {
      Enable custom event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func enableCustomEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
-        enableCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func enableCustomEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
+        enableCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -360,11 +390,17 @@ open class EventSettingsAPI {
      
      - parameter id: (path)  
      - parameter validOn: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func find(id: String, validOn: Int64? = nil, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
-        findWithRequestBuilder(id: id, validOn: validOn).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func find(id: String, validOn: Int64? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
+        findWithRequestBuilder(id: id, validOn: validOn).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -401,11 +437,17 @@ open class EventSettingsAPI {
      All Website Alert Configs
      
      - parameter websiteId: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func findAllActive(websiteId: String? = nil, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
-        findAllActiveWithRequestBuilder(websiteId: websiteId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func findAllActive(websiteId: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
+        findAllActiveWithRequestBuilder(websiteId: websiteId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -438,11 +480,17 @@ open class EventSettingsAPI {
      Get versions of Website Alert Config
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func findVersions(id: String, completion: @escaping ((_ data: [ConfigVersion]?,_ error: Error?) -> Void)) {
-        findVersionsWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func findVersions(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ConfigVersion]?,_ error: Error?) -> Void)) {
+        findVersionsWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -475,11 +523,17 @@ open class EventSettingsAPI {
      Alerting
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAlert(id: String, completion: @escaping ((_ data: AlertingConfigurationWithLastUpdated?,_ error: Error?) -> Void)) {
-        getAlertWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAlert(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: AlertingConfigurationWithLastUpdated?,_ error: Error?) -> Void)) {
+        getAlertWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -511,11 +565,17 @@ open class EventSettingsAPI {
      Alerting channel
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAlertingChannel(id: String, completion: @escaping ((_ data: AbstractIntegration?,_ error: Error?) -> Void)) {
-        getAlertingChannelWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAlertingChannel(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: AbstractIntegration?,_ error: Error?) -> Void)) {
+        getAlertingChannelWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -547,11 +607,17 @@ open class EventSettingsAPI {
      All alerting channels
      
      - parameter ids: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAlertingChannels(ids: [String]? = nil, completion: @escaping ((_ data: [AbstractIntegration]?,_ error: Error?) -> Void)) {
-        getAlertingChannelsWithRequestBuilder(ids: ids).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAlertingChannels(ids: [String]? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [AbstractIntegration]?,_ error: Error?) -> Void)) {
+        getAlertingChannelsWithRequestBuilder(ids: ids).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -583,11 +649,17 @@ open class EventSettingsAPI {
      All alerting configuration info
      
      - parameter integrationId: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAlertingConfigurationInfos(integrationId: String? = nil, completion: @escaping ((_ data: [ValidatedAlertingChannelInputInfo]?,_ error: Error?) -> Void)) {
-        getAlertingConfigurationInfosWithRequestBuilder(integrationId: integrationId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAlertingConfigurationInfos(integrationId: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ValidatedAlertingChannelInputInfo]?,_ error: Error?) -> Void)) {
+        getAlertingConfigurationInfosWithRequestBuilder(integrationId: integrationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -618,11 +690,17 @@ open class EventSettingsAPI {
     /**
      All Alerting
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAlerts(completion: @escaping ((_ data: [ValidatedAlertingConfiguration]?,_ error: Error?) -> Void)) {
-        getAlertsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAlerts(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ValidatedAlertingConfiguration]?,_ error: Error?) -> Void)) {
+        getAlertsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -650,11 +728,17 @@ open class EventSettingsAPI {
      Built-in event specifications
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getBuiltInEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: BuiltInEventSpecification?,_ error: Error?) -> Void)) {
-        getBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getBuiltInEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: BuiltInEventSpecification?,_ error: Error?) -> Void)) {
+        getBuiltInEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -686,11 +770,17 @@ open class EventSettingsAPI {
      All built-in event specification
      
      - parameter ids: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getBuiltInEventSpecifications(ids: [String]? = nil, completion: @escaping ((_ data: [BuiltInEventSpecificationWithLastUpdated]?,_ error: Error?) -> Void)) {
-        getBuiltInEventSpecificationsWithRequestBuilder(ids: ids).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getBuiltInEventSpecifications(ids: [String]? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [BuiltInEventSpecificationWithLastUpdated]?,_ error: Error?) -> Void)) {
+        getBuiltInEventSpecificationsWithRequestBuilder(ids: ids).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -722,11 +812,17 @@ open class EventSettingsAPI {
      Custom event specification
      
      - parameter eventSpecificationId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getCustomEventSpecification(eventSpecificationId: String, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
-        getCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getCustomEventSpecification(eventSpecificationId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
+        getCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -757,11 +853,17 @@ open class EventSettingsAPI {
     /**
      All custom event specifications
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getCustomEventSpecifications(completion: @escaping ((_ data: [CustomEventSpecificationWithLastUpdated]?,_ error: Error?) -> Void)) {
-        getCustomEventSpecificationsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getCustomEventSpecifications(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [CustomEventSpecificationWithLastUpdated]?,_ error: Error?) -> Void)) {
+        getCustomEventSpecificationsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -788,11 +890,17 @@ open class EventSettingsAPI {
     /**
      Summary of all built-in and custom event specifications
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventSpecificationInfos(completion: @escaping ((_ data: [EventSpecificationInfo]?,_ error: Error?) -> Void)) {
-        getEventSpecificationInfosWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEventSpecificationInfos(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [EventSpecificationInfo]?,_ error: Error?) -> Void)) {
+        getEventSpecificationInfosWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -820,11 +928,17 @@ open class EventSettingsAPI {
      All built-in and custom event specifications
      
      - parameter requestBody: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEventSpecificationInfosByIds(requestBody: [String], completion: @escaping ((_ data: [EventSpecificationInfo]?,_ error: Error?) -> Void)) {
-        getEventSpecificationInfosByIdsWithRequestBuilder(requestBody: requestBody).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEventSpecificationInfosByIds(requestBody: [String], apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [EventSpecificationInfo]?,_ error: Error?) -> Void)) {
+        getEventSpecificationInfosByIdsWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -853,11 +967,17 @@ open class EventSettingsAPI {
     /**
      All system rules for custom event specifications
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSystemRules(completion: @escaping ((_ data: [SystemRuleLabel]?,_ error: Error?) -> Void)) {
-        getSystemRulesWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getSystemRules(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [SystemRuleLabel]?,_ error: Error?) -> Void)) {
+        getSystemRulesWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -886,11 +1006,17 @@ open class EventSettingsAPI {
      
      - parameter id: (path)  
      - parameter alertingConfiguration: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putAlert(id: String, alertingConfiguration: AlertingConfiguration, completion: @escaping ((_ data: AlertingConfigurationWithLastUpdated?,_ error: Error?) -> Void)) {
-        putAlertWithRequestBuilder(id: id, alertingConfiguration: alertingConfiguration).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putAlert(id: String, alertingConfiguration: AlertingConfiguration, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: AlertingConfigurationWithLastUpdated?,_ error: Error?) -> Void)) {
+        putAlertWithRequestBuilder(id: id, alertingConfiguration: alertingConfiguration).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -924,13 +1050,15 @@ open class EventSettingsAPI {
      
      - parameter id: (path)  
      - parameter abstractIntegration: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putAlertingChannel(id: String, abstractIntegration: AbstractIntegration, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        putAlertingChannelWithRequestBuilder(id: id, abstractIntegration: abstractIntegration).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func putAlertingChannel(id: String, abstractIntegration: AbstractIntegration, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        putAlertingChannelWithRequestBuilder(id: id, abstractIntegration: abstractIntegration).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -966,11 +1094,17 @@ open class EventSettingsAPI {
      
      - parameter eventSpecificationId: (path)  
      - parameter customEventSpecification: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putCustomEventSpecification(eventSpecificationId: String, customEventSpecification: CustomEventSpecification, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
-        putCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId, customEventSpecification: customEventSpecification).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putCustomEventSpecification(eventSpecificationId: String, customEventSpecification: CustomEventSpecification, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: CustomEventSpecificationWithLastUpdated?,_ error: Error?) -> Void)) {
+        putCustomEventSpecificationWithRequestBuilder(eventSpecificationId: eventSpecificationId, customEventSpecification: customEventSpecification).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -1003,13 +1137,15 @@ open class EventSettingsAPI {
      Test alerting channel
      
      - parameter abstractIntegration: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func sendTestAlerting(abstractIntegration: AbstractIntegration, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        sendTestAlertingWithRequestBuilder(abstractIntegration: abstractIntegration).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func sendTestAlerting(abstractIntegration: AbstractIntegration, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        sendTestAlertingWithRequestBuilder(abstractIntegration: abstractIntegration).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -1041,11 +1177,17 @@ open class EventSettingsAPI {
      
      - parameter id: (path)  
      - parameter websiteAlertConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func update(id: String, websiteAlertConfig: WebsiteAlertConfig, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
-        updateWithRequestBuilder(id: id, websiteAlertConfig: websiteAlertConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func update(id: String, websiteAlertConfig: WebsiteAlertConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteAlertConfigWithMetadata]?,_ error: Error?) -> Void)) {
+        updateWithRequestBuilder(id: id, websiteAlertConfig: websiteAlertConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

@@ -11,12 +11,12 @@ import Foundation
 public struct ApplicationConfig: Codable { 
 
 
-    public enum Scope: String, Codable {
+    public enum Scope: String, Codable, CaseIterable {
         case noDownstream = "INCLUDE_NO_DOWNSTREAM"
         case immediateDownstreamDatabaseAndMessaging = "INCLUDE_IMMEDIATE_DOWNSTREAM_DATABASE_AND_MESSAGING"
         case allDownstream = "INCLUDE_ALL_DOWNSTREAM"
     }
-    public enum BoundaryScope: String, Codable {
+    public enum BoundaryScope: String, Codable, CaseIterable {
         case all = "ALL"
         case inbound = "INBOUND"
         case _default = "DEFAULT"

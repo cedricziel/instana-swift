@@ -11,7 +11,7 @@ import Foundation
 public struct EntityVerificationRule: Codable { 
 
 
-    public enum MatchingOperator: String, Codable {
+    public enum MatchingOperator: String, Codable, CaseIterable {
         case _is = "IS"
         case contains = "CONTAINS"
         case startsWith = "STARTS_WITH"

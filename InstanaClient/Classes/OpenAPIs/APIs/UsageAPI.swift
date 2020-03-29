@@ -13,11 +13,17 @@ open class UsageAPI {
     /**
      API usage by customer
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAllUsage(completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
-        getAllUsageWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAllUsage(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
+        getAllUsageWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -47,11 +53,17 @@ open class UsageAPI {
      - parameter day: (path)  
      - parameter month: (path)  
      - parameter year: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getHostsPerDay(day: Int, month: Int, year: Int, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
-        getHostsPerDayWithRequestBuilder(day: day, month: month, year: year).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getHostsPerDay(day: Int, month: Int, year: Int, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
+        getHostsPerDayWithRequestBuilder(day: day, month: month, year: year).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -92,11 +104,17 @@ open class UsageAPI {
      
      - parameter month: (path)  
      - parameter year: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getHostsPerMonth(month: Int, year: Int, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
-        getHostsPerMonthWithRequestBuilder(month: month, year: year).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getHostsPerMonth(month: Int, year: Int, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
+        getHostsPerMonthWithRequestBuilder(month: month, year: year).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -134,11 +152,17 @@ open class UsageAPI {
      - parameter day: (path)  
      - parameter month: (path)  
      - parameter year: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getUsagePerDay(day: Int, month: Int, year: Int, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
-        getUsagePerDayWithRequestBuilder(day: day, month: month, year: year).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getUsagePerDay(day: Int, month: Int, year: Int, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
+        getUsagePerDayWithRequestBuilder(day: day, month: month, year: year).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -179,11 +203,17 @@ open class UsageAPI {
      
      - parameter month: (path)  
      - parameter year: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getUsagePerMonth(month: Int, year: Int, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
-        getUsagePerMonthWithRequestBuilder(month: month, year: year).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getUsagePerMonth(month: Int, year: Int, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [UsageResult]?,_ error: Error?) -> Void)) {
+        getUsagePerMonthWithRequestBuilder(month: month, year: year).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

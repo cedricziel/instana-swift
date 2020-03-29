@@ -14,11 +14,17 @@ open class ApplicationMetricsAPI {
      Get Application Metrics
      
      - parameter getApplications: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationMetrics(getApplications: GetApplications? = nil, completion: @escaping ((_ data: ApplicationMetricResult?,_ error: Error?) -> Void)) {
-        getApplicationMetricsWithRequestBuilder(getApplications: getApplications).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationMetrics(getApplications: GetApplications? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApplicationMetricResult?,_ error: Error?) -> Void)) {
+        getApplicationMetricsWithRequestBuilder(getApplications: getApplications).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -47,11 +53,17 @@ open class ApplicationMetricsAPI {
      Get Endpoint metrics
      
      - parameter getEndpoints: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEndpointsMetrics(getEndpoints: GetEndpoints? = nil, completion: @escaping ((_ data: EndpointMetricResult?,_ error: Error?) -> Void)) {
-        getEndpointsMetricsWithRequestBuilder(getEndpoints: getEndpoints).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEndpointsMetrics(getEndpoints: GetEndpoints? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: EndpointMetricResult?,_ error: Error?) -> Void)) {
+        getEndpointsMetricsWithRequestBuilder(getEndpoints: getEndpoints).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -80,11 +92,17 @@ open class ApplicationMetricsAPI {
      Get Service metrics
      
      - parameter getServices: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getServicesMetrics(getServices: GetServices? = nil, completion: @escaping ((_ data: ServiceMetricResult?,_ error: Error?) -> Void)) {
-        getServicesMetricsWithRequestBuilder(getServices: getServices).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getServicesMetrics(getServices: GetServices? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceMetricResult?,_ error: Error?) -> Void)) {
+        getServicesMetricsWithRequestBuilder(getServices: getServices).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

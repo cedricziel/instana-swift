@@ -11,7 +11,7 @@ import Foundation
 public struct RuleInput: Codable { 
 
 
-    public enum InputKind: String, Codable {
+    public enum InputKind: String, Codable, CaseIterable {
         case metric = "METRIC"
         case snapshotField = "SNAPSHOT_FIELD"
         case event = "EVENT"

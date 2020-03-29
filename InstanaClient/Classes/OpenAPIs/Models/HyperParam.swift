@@ -11,7 +11,7 @@ import Foundation
 public struct HyperParam: Codable { 
 
 
-    public enum ValueFormat: String, Codable {
+    public enum ValueFormat: String, Codable, CaseIterable {
         case number = "NUMBER"
         case bytes = "BYTES"
         case percentage = "PERCENTAGE"

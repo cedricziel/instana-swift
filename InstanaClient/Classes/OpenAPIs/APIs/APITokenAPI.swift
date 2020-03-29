@@ -14,13 +14,15 @@ open class APITokenAPI {
      Delete API token
      
      - parameter apiTokenId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteApiToken(apiTokenId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteApiTokenWithRequestBuilder(apiTokenId: apiTokenId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteApiToken(apiTokenId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteApiTokenWithRequestBuilder(apiTokenId: apiTokenId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -54,11 +56,17 @@ open class APITokenAPI {
      API token
      
      - parameter apiTokenId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApiToken(apiTokenId: String, completion: @escaping ((_ data: ApiToken?,_ error: Error?) -> Void)) {
-        getApiTokenWithRequestBuilder(apiTokenId: apiTokenId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApiToken(apiTokenId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiToken?,_ error: Error?) -> Void)) {
+        getApiTokenWithRequestBuilder(apiTokenId: apiTokenId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -89,11 +97,17 @@ open class APITokenAPI {
     /**
      All API tokes
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApiTokens(completion: @escaping ((_ data: [ApiToken]?,_ error: Error?) -> Void)) {
-        getApiTokensWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApiTokens(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ApiToken]?,_ error: Error?) -> Void)) {
+        getApiTokensWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -122,11 +136,17 @@ open class APITokenAPI {
      
      - parameter apiTokenId: (path)  
      - parameter apiToken: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putApiToken(apiTokenId: String, apiToken: ApiToken, completion: @escaping ((_ data: ApiToken?,_ error: Error?) -> Void)) {
-        putApiTokenWithRequestBuilder(apiTokenId: apiTokenId, apiToken: apiToken).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putApiToken(apiTokenId: String, apiToken: ApiToken, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApiToken?,_ error: Error?) -> Void)) {
+        putApiTokenWithRequestBuilder(apiTokenId: apiTokenId, apiToken: apiToken).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

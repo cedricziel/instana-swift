@@ -11,7 +11,7 @@ import Foundation
 public struct GetWebsiteBeacons: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case pageload = "PAGELOAD"
         case resourceload = "RESOURCELOAD"
         case httprequest = "HTTPREQUEST"

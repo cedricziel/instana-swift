@@ -14,11 +14,17 @@ open class EventsAPI {
      Get Event
      
      - parameter eventId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEvent(eventId: String, completion: @escaping ((_ data: EventResult?,_ error: Error?) -> Void)) {
-        getEventWithRequestBuilder(eventId: eventId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEvent(eventId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: EventResult?,_ error: Error?) -> Void)) {
+        getEventWithRequestBuilder(eventId: eventId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -53,11 +59,17 @@ open class EventsAPI {
      - parameter from: (query)  (optional)
      - parameter to: (query)  (optional)
      - parameter excludeTriggeredBefore: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEvents(windowSize: Int64? = nil, from: Int64? = nil, to: Int64? = nil, excludeTriggeredBefore: Bool? = nil, completion: @escaping ((_ data: [EventResult]?,_ error: Error?) -> Void)) {
-        getEventsWithRequestBuilder(windowSize: windowSize, from: from, to: to, excludeTriggeredBefore: excludeTriggeredBefore).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEvents(windowSize: Int64? = nil, from: Int64? = nil, to: Int64? = nil, excludeTriggeredBefore: Bool? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [EventResult]?,_ error: Error?) -> Void)) {
+        getEventsWithRequestBuilder(windowSize: windowSize, from: from, to: to, excludeTriggeredBefore: excludeTriggeredBefore).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

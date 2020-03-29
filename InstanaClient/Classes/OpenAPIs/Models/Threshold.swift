@@ -11,7 +11,7 @@ import Foundation
 public struct Threshold: Codable { 
 
 
-    public enum Operator: String, Codable {
+    public enum Operator: String, Codable, CaseIterable {
         case gt = "GT"
         case gte = "GTE"
         case lt = "LT"
@@ -27,7 +27,7 @@ public struct Threshold: Codable {
         self.lastUpdated = lastUpdated
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
         case type
         case _operator = "operator"
         case lastUpdated

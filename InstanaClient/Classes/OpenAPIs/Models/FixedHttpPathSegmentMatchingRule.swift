@@ -11,7 +11,7 @@ import Foundation
 public struct FixedHttpPathSegmentMatchingRule: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case unsupported = "UNSUPPORTED"
         case fixed = "FIXED"
         case parameter = "PARAMETER"

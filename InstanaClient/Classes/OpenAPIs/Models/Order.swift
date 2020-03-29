@@ -11,7 +11,7 @@ import Foundation
 public struct Order: Codable { 
 
 
-    public enum Direction: String, Codable {
+    public enum Direction: String, Codable, CaseIterable {
         case asc = "ASC"
         case desc = "DESC"
     }

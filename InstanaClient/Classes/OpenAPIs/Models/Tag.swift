@@ -11,7 +11,7 @@ import Foundation
 public struct Tag: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case string = "STRING"
         case number = "NUMBER"
         case boolean = "BOOLEAN"

@@ -11,7 +11,7 @@ import Foundation
 public struct GetServices: Codable { 
 
 
-    public enum ContextScope: String, Codable {
+    public enum ContextScope: String, Codable, CaseIterable {
         case _none = "NONE"
         case upstream = "UPSTREAM"
         case downstream = "DOWNSTREAM"

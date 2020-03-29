@@ -13,13 +13,15 @@ open class DefaultAPI {
     /**
 
      - parameter websiteId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createSourceMapConfig(websiteId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        createSourceMapConfigWithRequestBuilder(websiteId: websiteId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func createSourceMapConfig(websiteId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        createSourceMapConfigWithRequestBuilder(websiteId: websiteId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -51,13 +53,15 @@ open class DefaultAPI {
     /**
 
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func delete(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func delete(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -90,13 +94,15 @@ open class DefaultAPI {
 
      - parameter websiteId: (path)  
      - parameter sourceMapConfigId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteSourceMapConfig(websiteId: String, sourceMapConfigId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteSourceMapConfig(websiteId: String, sourceMapConfigId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -132,13 +138,15 @@ open class DefaultAPI {
     /**
 
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func disable(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        disableWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func disable(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        disableWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -170,13 +178,15 @@ open class DefaultAPI {
     /**
 
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func enable(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        enableWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func enable(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        enableWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -209,13 +219,15 @@ open class DefaultAPI {
 
      - parameter websiteId: (path)  
      - parameter sourceMapConfigId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSourceMapConfig(websiteId: String, sourceMapConfigId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        getSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func getSourceMapConfig(websiteId: String, sourceMapConfigId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        getSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -251,13 +263,15 @@ open class DefaultAPI {
     /**
 
      - parameter websiteId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSourceMapConfigs(websiteId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        getSourceMapConfigsWithRequestBuilder(websiteId: websiteId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func getSourceMapConfigs(websiteId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        getSourceMapConfigsWithRequestBuilder(websiteId: websiteId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -290,13 +304,15 @@ open class DefaultAPI {
 
      - parameter websiteId: (path)  
      - parameter sourceMapConfigId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateSourceMapConfig(websiteId: String, sourceMapConfigId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        updateSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func updateSourceMapConfig(websiteId: String, sourceMapConfigId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        updateSourceMapConfigWithRequestBuilder(websiteId: websiteId, sourceMapConfigId: sourceMapConfigId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }

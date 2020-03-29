@@ -11,7 +11,7 @@ import Foundation
 public struct ValidatedAlertingChannelInputInfo: Codable { 
 
 
-    public enum EventTypes: String, Codable {
+    public enum EventTypes: String, Codable, CaseIterable {
         case incident = "INCIDENT"
         case critical = "CRITICAL"
         case warning = "WARNING"

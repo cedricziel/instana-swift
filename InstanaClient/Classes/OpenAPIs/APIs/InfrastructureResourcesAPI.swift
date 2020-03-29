@@ -13,11 +13,17 @@ open class InfrastructureResourcesAPI {
     /**
      Get view tree
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInfrastructureViewTree(completion: @escaping ((_ data: TreeNodeResult?,_ error: Error?) -> Void)) {
-        getInfrastructureViewTreeWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInfrastructureViewTree(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: TreeNodeResult?,_ error: Error?) -> Void)) {
+        getInfrastructureViewTreeWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -44,11 +50,17 @@ open class InfrastructureResourcesAPI {
     /**
      Monitored host count
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getMonitoringState(completion: @escaping ((_ data: MonitoringState?,_ error: Error?) -> Void)) {
-        getMonitoringStateWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getMonitoringState(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: MonitoringState?,_ error: Error?) -> Void)) {
+        getMonitoringStateWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -76,11 +88,17 @@ open class InfrastructureResourcesAPI {
      Related hosts
      
      - parameter snapshotId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getRelatedHosts(snapshotId: String, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
-        getRelatedHostsWithRequestBuilder(snapshotId: snapshotId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getRelatedHosts(snapshotId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [String]?,_ error: Error?) -> Void)) {
+        getRelatedHostsWithRequestBuilder(snapshotId: snapshotId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -116,11 +134,17 @@ open class InfrastructureResourcesAPI {
      - parameter type: (query)  (optional)
      - parameter name: (query)  (optional)
      - parameter version: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func softwareVersions(time: Int64? = nil, origin: String? = nil, type: String? = nil, name: String? = nil, version: String? = nil, completion: @escaping ((_ data: [SoftwareVersion]?,_ error: Error?) -> Void)) {
-        softwareVersionsWithRequestBuilder(time: time, origin: origin, type: type, name: name, version: version).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func softwareVersions(time: Int64? = nil, origin: String? = nil, type: String? = nil, name: String? = nil, version: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [SoftwareVersion]?,_ error: Error?) -> Void)) {
+        softwareVersionsWithRequestBuilder(time: time, origin: origin, type: type, name: name, version: version).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

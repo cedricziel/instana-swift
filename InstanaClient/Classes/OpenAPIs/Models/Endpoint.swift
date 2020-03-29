@@ -11,7 +11,7 @@ import Foundation
 public struct Endpoint: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case undefined = "UNDEFINED"
         case rpc = "RPC"
         case event = "EVENT"
@@ -26,7 +26,7 @@ public struct Endpoint: Codable {
         case page = "PAGE"
         case pageResource = "PAGE_RESOURCE"
     }
-    public enum EntityType: String, Codable {
+    public enum EntityType: String, Codable, CaseIterable {
         case application = "APPLICATION"
         case service = "SERVICE"
         case endpoint = "ENDPOINT"

@@ -11,7 +11,7 @@ import Foundation
 public struct MetricInstance: Codable { 
 
 
-    public enum Formatter: String, Codable {
+    public enum Formatter: String, Codable, CaseIterable {
         case number = "NUMBER"
         case bytes = "BYTES"
         case percentage = "PERCENTAGE"

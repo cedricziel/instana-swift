@@ -11,7 +11,7 @@ import Foundation
 public struct LogEntryActor: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case user = "USER"
         case apiToken = "API_TOKEN"
     }

@@ -20,11 +20,17 @@ open class ApplicationResourcesAPI {
      - parameter to: (query)  (optional)
      - parameter page: (query)  (optional)
      - parameter pageSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func applicationResourcesEndpoints(nameFilter: String? = nil, types: [String]? = nil, technologies: [String]? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: EndpointResult?,_ error: Error?) -> Void)) {
-        applicationResourcesEndpointsWithRequestBuilder(nameFilter: nameFilter, types: types, technologies: technologies, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func applicationResourcesEndpoints(nameFilter: String? = nil, types: [String]? = nil, technologies: [String]? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: EndpointResult?,_ error: Error?) -> Void)) {
+        applicationResourcesEndpointsWithRequestBuilder(nameFilter: nameFilter, types: types, technologies: technologies, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -72,11 +78,17 @@ open class ApplicationResourcesAPI {
      - parameter to: (query)  (optional)
      - parameter page: (query)  (optional)
      - parameter pageSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationServices(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: ServiceResult?,_ error: Error?) -> Void)) {
-        getApplicationServicesWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationServices(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceResult?,_ error: Error?) -> Void)) {
+        getApplicationServicesWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -120,11 +132,17 @@ open class ApplicationResourcesAPI {
      - parameter to: (query)  (optional)
      - parameter page: (query)  (optional)
      - parameter pageSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplications(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: ApplicationResult?,_ error: Error?) -> Void)) {
-        getApplicationsWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplications(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApplicationResult?,_ error: Error?) -> Void)) {
+        getApplicationsWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -168,11 +186,17 @@ open class ApplicationResourcesAPI {
      - parameter to: (query)  (optional)
      - parameter page: (query)  (optional)
      - parameter pageSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getServices(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: ServiceResult?,_ error: Error?) -> Void)) {
-        getServicesWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getServices(nameFilter: String? = nil, windowSize: Int64? = nil, to: Int64? = nil, page: Int? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceResult?,_ error: Error?) -> Void)) {
+        getServicesWithRequestBuilder(nameFilter: nameFilter, windowSize: windowSize, to: to, page: page, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

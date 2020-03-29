@@ -15,11 +15,17 @@ open class ApplicationAnalyzeAPI {
      
      - parameter fillTimeSeries: (query)  (optional)
      - parameter getCallGroups: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getCallGroup(fillTimeSeries: Bool? = nil, getCallGroups: GetCallGroups? = nil, completion: @escaping ((_ data: CallGroupsResult?,_ error: Error?) -> Void)) {
-        getCallGroupWithRequestBuilder(fillTimeSeries: fillTimeSeries, getCallGroups: getCallGroups).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getCallGroup(fillTimeSeries: Bool? = nil, getCallGroups: GetCallGroups? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: CallGroupsResult?,_ error: Error?) -> Void)) {
+        getCallGroupWithRequestBuilder(fillTimeSeries: fillTimeSeries, getCallGroups: getCallGroups).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -53,11 +59,17 @@ open class ApplicationAnalyzeAPI {
      Get trace detail
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTrace(id: String, completion: @escaping ((_ data: FullTrace?,_ error: Error?) -> Void)) {
-        getTraceWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getTrace(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: FullTrace?,_ error: Error?) -> Void)) {
+        getTraceWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -90,11 +102,17 @@ open class ApplicationAnalyzeAPI {
      
      - parameter fillTimeSeries: (query)  (optional)
      - parameter getTraceGroups: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTraceGroups(fillTimeSeries: Bool? = nil, getTraceGroups: GetTraceGroups? = nil, completion: @escaping ((_ data: TraceGroupsResult?,_ error: Error?) -> Void)) {
-        getTraceGroupsWithRequestBuilder(fillTimeSeries: fillTimeSeries, getTraceGroups: getTraceGroups).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getTraceGroups(fillTimeSeries: Bool? = nil, getTraceGroups: GetTraceGroups? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: TraceGroupsResult?,_ error: Error?) -> Void)) {
+        getTraceGroupsWithRequestBuilder(fillTimeSeries: fillTimeSeries, getTraceGroups: getTraceGroups).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -127,11 +145,17 @@ open class ApplicationAnalyzeAPI {
      Get all traces
      
      - parameter getTraces: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getTraces(getTraces: GetTraces? = nil, completion: @escaping ((_ data: TraceResult?,_ error: Error?) -> Void)) {
-        getTracesWithRequestBuilder(getTraces: getTraces).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getTraces(getTraces: GetTraces? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: TraceResult?,_ error: Error?) -> Void)) {
+        getTracesWithRequestBuilder(getTraces: getTraces).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

@@ -11,11 +11,11 @@ import Foundation
 public struct HistoricBaseline: Codable { 
 
 
-    public enum Seasonality: String, Codable {
+    public enum Seasonality: String, Codable, CaseIterable {
         case weekly = "WEEKLY"
         case daily = "DAILY"
     }
-    public enum Operator: String, Codable {
+    public enum Operator: String, Codable, CaseIterable {
         case gt = "GT"
         case gte = "GTE"
         case lt = "LT"
@@ -37,7 +37,7 @@ public struct HistoricBaseline: Codable {
         self.lastUpdated = lastUpdated
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
         case seasonality
         case baseline
         case deviationFactor

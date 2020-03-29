@@ -13,11 +13,17 @@ open class WebsiteCatalogAPI {
     /**
      Metric catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getWebsiteCatalogMetrics(completion: @escaping ((_ data: [WebsiteMonitoringMetricDescription]?,_ error: Error?) -> Void)) {
-        getWebsiteCatalogMetricsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getWebsiteCatalogMetrics(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteMonitoringMetricDescription]?,_ error: Error?) -> Void)) {
+        getWebsiteCatalogMetricsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -45,11 +51,17 @@ open class WebsiteCatalogAPI {
     /**
      Filter tag catalog
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getWebsiteCatalogTags(completion: @escaping ((_ data: [Tag]?,_ error: Error?) -> Void)) {
-        getWebsiteCatalogTagsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getWebsiteCatalogTags(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [Tag]?,_ error: Error?) -> Void)) {
+        getWebsiteCatalogTagsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

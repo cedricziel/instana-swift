@@ -11,7 +11,7 @@ import Foundation
 public struct SpecificJsErrorsWebsiteAlertRule: Codable { 
 
 
-    public enum Operator: String, Codable {
+    public enum Operator: String, Codable, CaseIterable {
         case equals = "EQUALS"
         case contains = "CONTAINS"
         case lessThan = "LESS_THAN"
@@ -39,7 +39,7 @@ public struct SpecificJsErrorsWebsiteAlertRule: Codable {
         self.metricName = metricName
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
         case _operator = "operator"
         case value
         case alertType

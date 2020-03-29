@@ -15,11 +15,17 @@ open class WebsiteAnalyzeAPI {
      
      - parameter fillTimeSeries: (query)  (optional)
      - parameter getWebsiteBeaconGroups: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getBeaconGroups(fillTimeSeries: Bool? = nil, getWebsiteBeaconGroups: GetWebsiteBeaconGroups? = nil, completion: @escaping ((_ data: BeaconGroupsResult?,_ error: Error?) -> Void)) {
-        getBeaconGroupsWithRequestBuilder(fillTimeSeries: fillTimeSeries, getWebsiteBeaconGroups: getWebsiteBeaconGroups).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getBeaconGroups(fillTimeSeries: Bool? = nil, getWebsiteBeaconGroups: GetWebsiteBeaconGroups? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: BeaconGroupsResult?,_ error: Error?) -> Void)) {
+        getBeaconGroupsWithRequestBuilder(fillTimeSeries: fillTimeSeries, getWebsiteBeaconGroups: getWebsiteBeaconGroups).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -52,11 +58,17 @@ open class WebsiteAnalyzeAPI {
      Get all beacons
      
      - parameter getWebsiteBeacons: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getBeacons(getWebsiteBeacons: GetWebsiteBeacons? = nil, completion: @escaping ((_ data: BeaconResult?,_ error: Error?) -> Void)) {
-        getBeaconsWithRequestBuilder(getWebsiteBeacons: getWebsiteBeacons).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getBeacons(getWebsiteBeacons: GetWebsiteBeacons? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: BeaconResult?,_ error: Error?) -> Void)) {
+        getBeaconsWithRequestBuilder(getWebsiteBeacons: getWebsiteBeacons).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

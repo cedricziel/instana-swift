@@ -13,11 +13,17 @@ open class HealthAPI {
     /**
      Basic health traffic light
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getHealthState(completion: @escaping ((_ data: HealthState?,_ error: Error?) -> Void)) {
-        getHealthStateWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getHealthState(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: HealthState?,_ error: Error?) -> Void)) {
+        getHealthStateWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -45,11 +51,17 @@ open class HealthAPI {
     /**
      API version information
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getVersion(completion: @escaping ((_ data: InstanaVersionInfo?,_ error: Error?) -> Void)) {
-        getVersionWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getVersion(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: InstanaVersionInfo?,_ error: Error?) -> Void)) {
+        getVersionWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

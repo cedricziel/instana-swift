@@ -16,11 +16,17 @@ open class AuditLogAPI {
      - parameter offset: (query)  (optional)
      - parameter query: (query)  (optional)
      - parameter pageSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAuditLogs(offset: Int? = nil, query: String? = nil, pageSize: Int? = nil, completion: @escaping ((_ data: AuditLogResponse?,_ error: Error?) -> Void)) {
-        getAuditLogsWithRequestBuilder(offset: offset, query: query, pageSize: pageSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAuditLogs(offset: Int? = nil, query: String? = nil, pageSize: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: AuditLogResponse?,_ error: Error?) -> Void)) {
+        getAuditLogsWithRequestBuilder(offset: offset, query: query, pageSize: pageSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

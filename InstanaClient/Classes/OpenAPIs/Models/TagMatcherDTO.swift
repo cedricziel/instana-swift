@@ -11,12 +11,12 @@ import Foundation
 public struct TagMatcherDTO: Codable { 
 
 
-    public enum Entity: String, Codable {
+    public enum Entity: String, Codable, CaseIterable {
         case notApplicable = "NOT_APPLICABLE"
         case destination = "DESTINATION"
         case source = "SOURCE"
     }
-    public enum Operator: String, Codable {
+    public enum Operator: String, Codable, CaseIterable {
         case equals = "EQUALS"
         case notEqual = "NOT_EQUAL"
         case contains = "CONTAINS"
@@ -34,7 +34,7 @@ public struct TagMatcherDTO: Codable {
     public var _operator: Operator
 
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
         case key
         case entity
         case value

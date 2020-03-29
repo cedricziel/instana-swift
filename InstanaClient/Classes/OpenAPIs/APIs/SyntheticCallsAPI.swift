@@ -13,13 +13,15 @@ open class SyntheticCallsAPI {
     /**
      Delete synthetic call configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteSyntheticCall(completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteSyntheticCallWithRequestBuilder().execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteSyntheticCall(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteSyntheticCallWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -48,11 +50,17 @@ open class SyntheticCallsAPI {
     /**
      Synthetic call configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSyntheticCalls(completion: @escaping ((_ data: SyntheticCallWithDefaultsConfig?,_ error: Error?) -> Void)) {
-        getSyntheticCallsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getSyntheticCalls(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: SyntheticCallWithDefaultsConfig?,_ error: Error?) -> Void)) {
+        getSyntheticCallsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -80,13 +88,15 @@ open class SyntheticCallsAPI {
      Update synthetic call configurations
      
      - parameter syntheticCallConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateSyntheticCall(syntheticCallConfig: SyntheticCallConfig, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        updateSyntheticCallWithRequestBuilder(syntheticCallConfig: syntheticCallConfig).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func updateSyntheticCall(syntheticCallConfig: SyntheticCallConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        updateSyntheticCallWithRequestBuilder(syntheticCallConfig: syntheticCallConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }

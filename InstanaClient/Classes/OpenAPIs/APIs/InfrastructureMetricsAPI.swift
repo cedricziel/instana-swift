@@ -16,11 +16,17 @@ open class InfrastructureMetricsAPI {
      - parameter context: (query)  (optional)
      - parameter offline: (query)  (optional)
      - parameter getCombinedMetrics: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getInfrastructureMetrics(context: Bool? = nil, offline: Bool? = nil, getCombinedMetrics: GetCombinedMetrics? = nil, completion: @escaping ((_ data: InfrastructureMetricResult?,_ error: Error?) -> Void)) {
-        getInfrastructureMetricsWithRequestBuilder(context: context, offline: offline, getCombinedMetrics: getCombinedMetrics).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getInfrastructureMetrics(context: Bool? = nil, offline: Bool? = nil, getCombinedMetrics: GetCombinedMetrics? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: InfrastructureMetricResult?,_ error: Error?) -> Void)) {
+        getInfrastructureMetricsWithRequestBuilder(context: context, offline: offline, getCombinedMetrics: getCombinedMetrics).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -57,11 +63,17 @@ open class InfrastructureMetricsAPI {
      - parameter id: (path)  
      - parameter to: (query)  (optional)
      - parameter windowSize: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSnapshot(id: String, to: Int64? = nil, windowSize: Int64? = nil, completion: @escaping ((_ data: SnapshotItem?,_ error: Error?) -> Void)) {
-        getSnapshotWithRequestBuilder(id: id, to: to, windowSize: windowSize).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getSnapshot(id: String, to: Int64? = nil, windowSize: Int64? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: SnapshotItem?,_ error: Error?) -> Void)) {
+        getSnapshotWithRequestBuilder(id: id, to: to, windowSize: windowSize).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -104,11 +116,17 @@ open class InfrastructureMetricsAPI {
      - parameter size: (query)  (optional)
      - parameter plugin: (query)  (optional)
      - parameter offline: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getSnapshots(query: String? = nil, to: Int64? = nil, windowSize: Int64? = nil, size: Int? = nil, plugin: String? = nil, offline: Bool? = nil, completion: @escaping ((_ data: SnapshotResult?,_ error: Error?) -> Void)) {
-        getSnapshotsWithRequestBuilder(query: query, to: to, windowSize: windowSize, size: size, plugin: plugin, offline: offline).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getSnapshots(query: String? = nil, to: Int64? = nil, windowSize: Int64? = nil, size: Int? = nil, plugin: String? = nil, offline: Bool? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: SnapshotResult?,_ error: Error?) -> Void)) {
+        getSnapshotsWithRequestBuilder(query: query, to: to, windowSize: windowSize, size: size, plugin: plugin, offline: offline).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

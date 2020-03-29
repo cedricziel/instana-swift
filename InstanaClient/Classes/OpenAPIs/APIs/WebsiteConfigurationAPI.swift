@@ -13,11 +13,17 @@ open class WebsiteConfigurationAPI {
     /**
      Get configured websites
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func callGet(completion: @escaping ((_ data: [Website]?,_ error: Error?) -> Void)) {
-        callGetWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func callGet(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [Website]?,_ error: Error?) -> Void)) {
+        callGetWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -45,13 +51,15 @@ open class WebsiteConfigurationAPI {
      Remove website
      
      - parameter websiteId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func delete1(websiteId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        delete1WithRequestBuilder(websiteId: websiteId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func delete1(websiteId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        delete1WithRequestBuilder(websiteId: websiteId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -85,11 +93,17 @@ open class WebsiteConfigurationAPI {
      Configure new website
      
      - parameter name: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func post(name: String? = nil, completion: @escaping ((_ data: Website?,_ error: Error?) -> Void)) {
-        postWithRequestBuilder(name: name).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func post(name: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Website?,_ error: Error?) -> Void)) {
+        postWithRequestBuilder(name: name).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -122,11 +136,17 @@ open class WebsiteConfigurationAPI {
      
      - parameter websiteId: (path)  
      - parameter name: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func rename(websiteId: String, name: String? = nil, completion: @escaping ((_ data: Website?,_ error: Error?) -> Void)) {
-        renameWithRequestBuilder(websiteId: websiteId, name: name).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func rename(websiteId: String, name: String? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Website?,_ error: Error?) -> Void)) {
+        renameWithRequestBuilder(websiteId: websiteId, name: name).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

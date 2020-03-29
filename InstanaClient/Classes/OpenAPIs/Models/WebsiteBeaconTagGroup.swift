@@ -11,7 +11,7 @@ import Foundation
 public struct WebsiteBeaconTagGroup: Codable { 
 
 
-    public enum GroupbyTagEntity: String, Codable {
+    public enum GroupbyTagEntity: String, Codable, CaseIterable {
         case notApplicable = "NOT_APPLICABLE"
         case destination = "DESTINATION"
         case source = "SOURCE"

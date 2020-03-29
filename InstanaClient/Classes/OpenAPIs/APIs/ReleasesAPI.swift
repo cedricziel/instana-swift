@@ -14,13 +14,15 @@ open class ReleasesAPI {
      Delete release
      
      - parameter releaseId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteRelease(releaseId: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteReleaseWithRequestBuilder(releaseId: releaseId).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteRelease(releaseId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteReleaseWithRequestBuilder(releaseId: releaseId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -56,11 +58,17 @@ open class ReleasesAPI {
      - parameter from: (query)  (optional)
      - parameter to: (query)  (optional)
      - parameter maxResults: (query)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getAllReleases(from: Int64? = nil, to: Int64? = nil, maxResults: Int? = nil, completion: @escaping ((_ data: [ReleaseWithMetadata]?,_ error: Error?) -> Void)) {
-        getAllReleasesWithRequestBuilder(from: from, to: to, maxResults: maxResults).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getAllReleases(from: Int64? = nil, to: Int64? = nil, maxResults: Int? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ReleaseWithMetadata]?,_ error: Error?) -> Void)) {
+        getAllReleasesWithRequestBuilder(from: from, to: to, maxResults: maxResults).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -97,11 +105,17 @@ open class ReleasesAPI {
      Get release
      
      - parameter releaseId: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getRelease(releaseId: String, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
-        getReleaseWithRequestBuilder(releaseId: releaseId).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getRelease(releaseId: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
+        getReleaseWithRequestBuilder(releaseId: releaseId).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -133,11 +147,17 @@ open class ReleasesAPI {
      Create release
      
      - parameter release: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func postRelease(release: Release, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
-        postReleaseWithRequestBuilder(release: release).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func postRelease(release: Release, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
+        postReleaseWithRequestBuilder(release: release).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -167,11 +187,17 @@ open class ReleasesAPI {
      
      - parameter releaseId: (path)  
      - parameter release: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putRelease(releaseId: String, release: Release, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
-        putReleaseWithRequestBuilder(releaseId: releaseId, release: release).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putRelease(releaseId: String, release: Release, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ReleaseWithMetadata?,_ error: Error?) -> Void)) {
+        putReleaseWithRequestBuilder(releaseId: releaseId, release: release).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

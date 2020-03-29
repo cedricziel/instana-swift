@@ -11,7 +11,7 @@ import Foundation
 public struct OpsgenieIntegration: Codable { 
 
 
-    public enum Region: String, Codable {
+    public enum Region: String, Codable, CaseIterable {
         case us = "US"
         case eu = "EU"
     }

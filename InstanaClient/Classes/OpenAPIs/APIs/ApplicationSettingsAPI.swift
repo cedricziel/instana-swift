@@ -14,11 +14,17 @@ open class ApplicationSettingsAPI {
      Add application configuration
      
      - parameter applicationConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func addApplicationConfig(applicationConfig: ApplicationConfig, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
-        addApplicationConfigWithRequestBuilder(applicationConfig: applicationConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func addApplicationConfig(applicationConfig: ApplicationConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
+        addApplicationConfigWithRequestBuilder(applicationConfig: applicationConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -47,11 +53,17 @@ open class ApplicationSettingsAPI {
      Add service configuration
      
      - parameter serviceConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func addServiceConfig(serviceConfig: ServiceConfig, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
-        addServiceConfigWithRequestBuilder(serviceConfig: serviceConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func addServiceConfig(serviceConfig: ServiceConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
+        addServiceConfigWithRequestBuilder(serviceConfig: serviceConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -80,11 +92,17 @@ open class ApplicationSettingsAPI {
      Create endpoint configuration
      
      - parameter httpEndpointConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func createEndpointConfig(httpEndpointConfig: HttpEndpointConfig, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
-        createEndpointConfigWithRequestBuilder(httpEndpointConfig: httpEndpointConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func createEndpointConfig(httpEndpointConfig: HttpEndpointConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
+        createEndpointConfigWithRequestBuilder(httpEndpointConfig: httpEndpointConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -113,13 +131,15 @@ open class ApplicationSettingsAPI {
      Delete application configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteApplicationConfig(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteApplicationConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteApplicationConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteApplicationConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -153,13 +173,15 @@ open class ApplicationSettingsAPI {
      Delete endpoint configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteEndpointConfig(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteEndpointConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteEndpointConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteEndpointConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -193,13 +215,15 @@ open class ApplicationSettingsAPI {
      Delete service configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func deleteServiceConfig(id: String, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        deleteServiceConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func deleteServiceConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        deleteServiceConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -233,11 +257,17 @@ open class ApplicationSettingsAPI {
      Application configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationConfig(id: String, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
-        getApplicationConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
+        getApplicationConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -268,11 +298,17 @@ open class ApplicationSettingsAPI {
     /**
      All Application configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getApplicationConfigs(completion: @escaping ((_ data: [ApplicationConfig]?,_ error: Error?) -> Void)) {
-        getApplicationConfigsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getApplicationConfigs(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ApplicationConfig]?,_ error: Error?) -> Void)) {
+        getApplicationConfigsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -300,11 +336,17 @@ open class ApplicationSettingsAPI {
      Endpoint configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEndpointConfig(id: String, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
-        getEndpointConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEndpointConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
+        getEndpointConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -335,11 +377,17 @@ open class ApplicationSettingsAPI {
     /**
      All Endpoint configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getEndpointConfigs(completion: @escaping ((_ data: [HttpEndpointConfig]?,_ error: Error?) -> Void)) {
-        getEndpointConfigsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getEndpointConfigs(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [HttpEndpointConfig]?,_ error: Error?) -> Void)) {
+        getEndpointConfigsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -367,11 +415,17 @@ open class ApplicationSettingsAPI {
      Service configuration
      
      - parameter id: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getServiceConfig(id: String, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
-        getServiceConfigWithRequestBuilder(id: id).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getServiceConfig(id: String, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
+        getServiceConfigWithRequestBuilder(id: id).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -402,11 +456,17 @@ open class ApplicationSettingsAPI {
     /**
      All service configurations
      
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getServiceConfigs(completion: @escaping ((_ data: [ServiceConfig]?,_ error: Error?) -> Void)) {
-        getServiceConfigsWithRequestBuilder().execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getServiceConfigs(apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [ServiceConfig]?,_ error: Error?) -> Void)) {
+        getServiceConfigsWithRequestBuilder().execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -434,13 +494,15 @@ open class ApplicationSettingsAPI {
      Order of service configuration
      
      - parameter requestBody: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func orderServiceConfig(requestBody: [String], completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
-        orderServiceConfigWithRequestBuilder(requestBody: requestBody).execute { (response, error) -> Void in
-            if error == nil {
-                completion((), error)
-            } else {
+    open class func orderServiceConfig(requestBody: [String], apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: Void?,_ error: Error?) -> Void)) {
+        orderServiceConfigWithRequestBuilder(requestBody: requestBody).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case .success:
+                completion((), nil)
+            case let .failure(error):
                 completion(nil, error)
             }
         }
@@ -472,11 +534,17 @@ open class ApplicationSettingsAPI {
      
      - parameter id: (path)  
      - parameter applicationConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putApplicationConfig(id: String, applicationConfig: ApplicationConfig, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
-        putApplicationConfigWithRequestBuilder(id: id, applicationConfig: applicationConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putApplicationConfig(id: String, applicationConfig: ApplicationConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ApplicationConfig?,_ error: Error?) -> Void)) {
+        putApplicationConfigWithRequestBuilder(id: id, applicationConfig: applicationConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -510,11 +578,17 @@ open class ApplicationSettingsAPI {
      
      - parameter id: (path)  
      - parameter serviceConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func putServiceConfig(id: String, serviceConfig: ServiceConfig, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
-        putServiceConfigWithRequestBuilder(id: id, serviceConfig: serviceConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func putServiceConfig(id: String, serviceConfig: ServiceConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: ServiceConfig?,_ error: Error?) -> Void)) {
+        putServiceConfigWithRequestBuilder(id: id, serviceConfig: serviceConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -548,11 +622,17 @@ open class ApplicationSettingsAPI {
      
      - parameter id: (path)  
      - parameter httpEndpointConfig: (body)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func updateEndpointConfig(id: String, httpEndpointConfig: HttpEndpointConfig, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
-        updateEndpointConfigWithRequestBuilder(id: id, httpEndpointConfig: httpEndpointConfig).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func updateEndpointConfig(id: String, httpEndpointConfig: HttpEndpointConfig, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: HttpEndpointConfig?,_ error: Error?) -> Void)) {
+        updateEndpointConfigWithRequestBuilder(id: id, httpEndpointConfig: httpEndpointConfig).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 

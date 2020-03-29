@@ -11,7 +11,7 @@ import Foundation
 public struct EventSpecificationInfo: Codable { 
 
 
-    public enum ModelType: String, Codable {
+    public enum ModelType: String, Codable, CaseIterable {
         case builtIn = "BUILT_IN"
         case custom = "CUSTOM"
     }

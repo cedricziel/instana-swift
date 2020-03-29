@@ -11,7 +11,7 @@ import Foundation
 public struct HealthState: Codable { 
 
 
-    public enum Health: String, Codable {
+    public enum Health: String, Codable, CaseIterable {
         case red = "RED"
         case yellow = "YELLOW"
         case green = "GREEN"

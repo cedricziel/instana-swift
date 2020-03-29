@@ -11,7 +11,7 @@ import Foundation
 public struct TagFilter: Codable { 
 
 
-    public enum Operator: String, Codable {
+    public enum Operator: String, Codable, CaseIterable {
         case equals = "EQUALS"
         case contains = "CONTAINS"
         case lessThan = "LESS_THAN"
@@ -29,7 +29,7 @@ public struct TagFilter: Codable {
         case notStartsWith = "NOT_STARTS_WITH"
         case notEndsWith = "NOT_ENDS_WITH"
     }
-    public enum Entity: String, Codable {
+    public enum Entity: String, Codable, CaseIterable {
         case notApplicable = "NOT_APPLICABLE"
         case destination = "DESTINATION"
         case source = "SOURCE"
@@ -46,7 +46,7 @@ public struct TagFilter: Codable {
         self.entity = entity
     }
 
-    public enum CodingKeys: String, CodingKey { 
+    public enum CodingKeys: String, CodingKey, CaseIterable { 
         case name
         case value
         case _operator = "operator"

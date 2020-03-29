@@ -14,11 +14,17 @@ open class WebsiteMetricsAPI {
      Get beacon metrics
      
      - parameter getWebsiteMetrics: (body)  (optional)
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getBeaconMetrics(getWebsiteMetrics: GetWebsiteMetrics? = nil, completion: @escaping ((_ data: WebsiteMetricResult?,_ error: Error?) -> Void)) {
-        getBeaconMetricsWithRequestBuilder(getWebsiteMetrics: getWebsiteMetrics).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getBeaconMetrics(getWebsiteMetrics: GetWebsiteMetrics? = nil, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: WebsiteMetricResult?,_ error: Error?) -> Void)) {
+        getBeaconMetricsWithRequestBuilder(getWebsiteMetrics: getWebsiteMetrics).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
@@ -48,11 +54,17 @@ open class WebsiteMetricsAPI {
      
      - parameter id: (path)  
      - parameter timestamp: (path)  
+     - parameter apiResponseQueue: The queue on which api response is dispatched.
      - parameter completion: completion handler to receive the data and the error objects
      */
-    open class func getPageLoad(id: String, timestamp: Int64, completion: @escaping ((_ data: [WebsiteMonitoringBeacon]?,_ error: Error?) -> Void)) {
-        getPageLoadWithRequestBuilder(id: id, timestamp: timestamp).execute { (response, error) -> Void in
-            completion(response?.body, error)
+    open class func getPageLoad(id: String, timestamp: Int64, apiResponseQueue: DispatchQueue = InstanaClientAPI.apiResponseQueue, completion: @escaping ((_ data: [WebsiteMonitoringBeacon]?,_ error: Error?) -> Void)) {
+        getPageLoadWithRequestBuilder(id: id, timestamp: timestamp).execute(apiResponseQueue) { result -> Void in
+            switch result {
+            case let .success(response):
+                completion(response.body, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
         }
     }
 
