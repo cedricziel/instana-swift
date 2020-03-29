@@ -23,7 +23,7 @@ public struct OpsgenieIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(apiKey: String, tags: String?, region: Region, alias: String?id: String?, kind: String, name: String) {
+    public init(apiKey: String, tags: String?, region: Region, alias: String?, id: String?, kind: String, name: String) {
         self.apiKey = apiKey
         self.tags = tags
         self.region = region

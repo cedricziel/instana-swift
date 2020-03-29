@@ -18,7 +18,7 @@ public struct SlackIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(webhookUrl: String, iconUrl: String, channel: Stringid: String?, kind: String, name: String) {
+    public init(webhookUrl: String, iconUrl: String, channel: String, id: String?, kind: String, name: String) {
         self.webhookUrl = webhookUrl
         self.iconUrl = iconUrl
         self.channel = channel

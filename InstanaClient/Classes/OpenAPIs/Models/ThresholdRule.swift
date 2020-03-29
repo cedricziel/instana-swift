@@ -37,7 +37,7 @@ public struct ThresholdRule: Codable {
     public var ruleType: String
     public var severity: Int?
 
-    public init(metricName: String, rollup: Int64?, window: Int64?, aggregation: Aggregation?, conditionOperator: ConditionOperator, conditionValue: Double?ruleType: String, severity: Int?) {
+    public init(metricName: String, rollup: Int64?, window: Int64?, aggregation: Aggregation?, conditionOperator: ConditionOperator, conditionValue: Double?, ruleType: String, severity: Int?) {
         self.metricName = metricName
         self.rollup = rollup
         self.window = window

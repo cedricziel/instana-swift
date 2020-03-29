@@ -28,7 +28,7 @@ public struct HistoricBaseline: Codable {
     public var _operator: Operator
     public var lastUpdated: Int64?
 
-    public init(seasonality: Seasonality, baseline: [[Double]], deviationFactor: Double?type: String, _operator: Operator, lastUpdated: Int64?) {
+    public init(seasonality: Seasonality, baseline: [[Double]], deviationFactor: Double?, type: String, _operator: Operator, lastUpdated: Int64?) {
         self.seasonality = seasonality
         self.baseline = baseline
         self.deviationFactor = deviationFactor

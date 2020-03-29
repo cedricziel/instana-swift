@@ -29,7 +29,7 @@ public struct SlownessWebsiteAlertRule: Codable {
     public var alertType: String
     public var metricName: String
 
-    public init(aggregation: AggregationalertType: String, metricName: String) {
+    public init(aggregation: Aggregation, alertType: String, metricName: String) {
         self.aggregation = aggregation
         self.alertType = alertType
         self.metricName = metricName

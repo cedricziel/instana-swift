@@ -20,7 +20,7 @@ public struct UnsupportedHttpPathSegmentMatchingRule: Codable {
     public var unsupportedType: String?
     public var type: ModelType
 
-    public init(unsupportedType: String?type: ModelType) {
+    public init(unsupportedType: String?, type: ModelType) {
         self.unsupportedType = unsupportedType
         self.type = type
     }
