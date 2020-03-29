@@ -21,10 +21,8 @@ public struct EventResult: Codable {
     public var fixSuggestion: String?
     public var severity: Int?
     public var snapshotId: String?
-    public var metrics: [[String:Any]]?
-    public var recentEvents: [[String:Any]]?
 
-    public init(eventId: String?, start: Int64?, end: Int64?, triggeringTime: Int64?, type: String?, state: String?, problem: String?, fixSuggestion: String?, severity: Int?, snapshotId: String?, metrics: [[String:Any]]?, recentEvents: [[String:Any]]?) {
+    public init(eventId: String?, start: Int64?, end: Int64?, triggeringTime: Int64?, type: String?, state: String?, problem: String?, fixSuggestion: String?, severity: Int?, snapshotId: String?) {
         self.eventId = eventId
         self.start = start
         self.end = end
@@ -35,8 +33,6 @@ public struct EventResult: Codable {
         self.fixSuggestion = fixSuggestion
         self.severity = severity
         self.snapshotId = snapshotId
-        self.metrics = metrics
-        self.recentEvents = recentEvents
     }
 
 }
