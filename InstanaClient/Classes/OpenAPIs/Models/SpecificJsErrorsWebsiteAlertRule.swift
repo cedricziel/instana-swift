@@ -32,7 +32,7 @@ public struct SpecificJsErrorsWebsiteAlertRule: Codable {
     public var alertType: String
     public var metricName: String
 
-    public init(_operator: Operator, value: String?alertType: String, metricName: String) {
+    public init(_operator: Operator, value: String?, alertType: String, metricName: String) {
         self._operator = _operator
         self.value = value
         self.alertType = alertType

@@ -22,7 +22,7 @@ public struct StaticThreshold: Codable {
     public var _operator: Operator
     public var lastUpdated: Int64?
 
-    public init(value: Double?type: String, _operator: Operator, lastUpdated: Int64?) {
+    public init(value: Double?, type: String, _operator: Operator, lastUpdated: Int64?) {
         self.value = value
         self.type = type
         self._operator = _operator

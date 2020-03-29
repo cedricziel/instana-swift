@@ -16,7 +16,7 @@ public struct PagerdutyIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(serviceIntegrationKey: Stringid: String?, kind: String, name: String) {
+    public init(serviceIntegrationKey: String, id: String?, kind: String, name: String) {
         self.serviceIntegrationKey = serviceIntegrationKey
         self.id = id
         self.kind = kind

@@ -17,7 +17,7 @@ public struct WebhookIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(webhookUrls: [String], headers: [String]?id: String?, kind: String, name: String) {
+    public init(webhookUrls: [String], headers: [String]?, id: String?, kind: String, name: String) {
         self.webhookUrls = webhookUrls
         self.headers = headers
         self.id = id

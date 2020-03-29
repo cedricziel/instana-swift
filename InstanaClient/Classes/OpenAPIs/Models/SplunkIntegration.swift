@@ -17,7 +17,7 @@ public struct SplunkIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(url: String, token: Stringid: String?, kind: String, name: String) {
+    public init(url: String, token: String, id: String?, kind: String, name: String) {
         self.url = url
         self.token = token
         self.id = id
