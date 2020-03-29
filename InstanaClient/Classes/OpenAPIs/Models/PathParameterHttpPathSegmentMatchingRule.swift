@@ -20,7 +20,7 @@ public struct PathParameterHttpPathSegmentMatchingRule: Codable {
     public var name: String?
     public var type: ModelType
 
-    public init(name: String?type: ModelType) {
+    public init(name: String?, type: ModelType) {
         self.name = name
         self.type = type
     }

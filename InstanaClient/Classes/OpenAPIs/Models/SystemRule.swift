@@ -16,7 +16,7 @@ public struct SystemRule: Codable {
     public var ruleType: String
     public var severity: Int?
 
-    public init(systemRuleId: StringruleType: String, severity: Int?) {
+    public init(systemRuleId: String, ruleType: String, severity: Int?) {
         self.systemRuleId = systemRuleId
         self.ruleType = ruleType
         self.severity = severity

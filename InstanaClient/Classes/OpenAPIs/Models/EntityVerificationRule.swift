@@ -26,7 +26,7 @@ public struct EntityVerificationRule: Codable {
     public var ruleType: String
     public var severity: Int?
 
-    public init(matchingEntityType: String, matchingOperator: MatchingOperator, matchingEntityLabel: String, offlineDuration: Int64?ruleType: String, severity: Int?) {
+    public init(matchingEntityType: String, matchingOperator: MatchingOperator, matchingEntityLabel: String, offlineDuration: Int64?, ruleType: String, severity: Int?) {
         self.matchingEntityType = matchingEntityType
         self.matchingOperator = matchingOperator
         self.matchingEntityLabel = matchingEntityLabel

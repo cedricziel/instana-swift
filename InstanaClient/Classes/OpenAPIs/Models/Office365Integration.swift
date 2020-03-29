@@ -16,7 +16,7 @@ public struct Office365Integration: Codable {
     public var kind: String
     public var name: String
 
-    public init(webhookUrl: Stringid: String?, kind: String, name: String) {
+    public init(webhookUrl: String, id: String?, kind: String, name: String) {
         self.webhookUrl = webhookUrl
         self.id = id
         self.kind = kind

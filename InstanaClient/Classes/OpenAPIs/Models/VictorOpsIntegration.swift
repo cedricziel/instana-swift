@@ -17,7 +17,7 @@ public struct VictorOpsIntegration: Codable {
     public var kind: String
     public var name: String
 
-    public init(apiKey: String, routingKey: Stringid: String?, kind: String, name: String) {
+    public init(apiKey: String, routingKey: String, id: String?, kind: String, name: String) {
         self.apiKey = apiKey
         self.routingKey = routingKey
         self.id = id
