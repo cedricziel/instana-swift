@@ -30,13 +30,12 @@ public struct Span: Codable {
     public var batchSelfTime: Int64?
     public var kind: Kind
     public var isSynthetic: Bool?
-    public var data: [String:Any]
     public var source: SpanRelation?
     public var destination: SpanRelation?
     public var stackTrace: [StackTraceItem]
     public var childSpans: [Span]
 
-    public init(id: String?, parentId: String?, callId: String?, name: String?, label: String?, start: Int64?, duration: Int64?, calculatedSelfTime: Int64?, errorCount: Int?, batchSize: Int?, batchSelfTime: Int64?, kind: Kind, isSynthetic: Bool?, data: [String:Any], source: SpanRelation?, destination: SpanRelation?, stackTrace: [StackTraceItem], childSpans: [Span]) {
+    public init(id: String?, parentId: String?, callId: String?, name: String?, label: String?, start: Int64?, duration: Int64?, calculatedSelfTime: Int64?, errorCount: Int?, batchSize: Int?, batchSelfTime: Int64?, kind: Kind, isSynthetic: Bool?, source: SpanRelation?, destination: SpanRelation?, stackTrace: [StackTraceItem], childSpans: [Span]) {
         self.id = id
         self.parentId = parentId
         self.callId = callId
@@ -50,7 +49,6 @@ public struct Span: Codable {
         self.batchSelfTime = batchSelfTime
         self.kind = kind
         self.isSynthetic = isSynthetic
-        self.data = data
         self.source = source
         self.destination = destination
         self.stackTrace = stackTrace

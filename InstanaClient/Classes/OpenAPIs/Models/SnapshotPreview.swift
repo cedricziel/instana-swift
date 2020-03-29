@@ -15,7 +15,6 @@ public struct SnapshotPreview: Codable {
     public var time: Int64?
     public var label: String?
     public var plugin: String?
-    public var data: [String:Any]?
 
     public init(id: String?, time: Int64?, label: String?, plugin: String?) {
         self.id = id
